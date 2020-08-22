@@ -74,13 +74,14 @@ def get_resolved(doc, clusters):
                     else:
                         # Neutralise the co-referring mention
                         pronoun = resolved[coref.start].strip().lower()
-                        if pronoun in SECOND_PERSONAL_PRONOUNS:
+                        token = doc[coref.start]
+                        if token.tag_ == 'PRP' and 'subj' in token.dep_:
                             detected_pronoun_set = SECOND_PERSONAL_PRONOUNS
-                        elif pronoun in SECOND_OBJECTIVE_PRONOUNS:
+                        elif token.tag_ == 'PRP' and 'obj' in token.dep_:
                             detected_pronoun_set = SECOND_OBJECTIVE_PRONOUNS
-                        elif pronoun in SECOND_PROMINAL_PRONOUNS:
+                        elif token.tag_ == 'PRP$' and token.dep_ == 'poss':
                             detected_pronoun_set = SECOND_PROMINAL_PRONOUNS
-                        elif pronoun in SECOND_POSSESSIVE_PRONOUNS:
+                        elif token.tag_ == 'NNS' and token.dep_ == 'attr':
                             detected_pronoun_set = SECOND_POSSESSIVE_PRONOUNS
                         else:
                             print("fuck", pronoun, pronoun
@@ -100,10 +101,11 @@ def get_resolved(doc, clusters):
                             for word in original_sentence
                         ]
                     final_sentence = ''.join(original_sentence)
-                    lines.append(
-                        [final_sentence, resolved[coref.start], coref.text])
+                    # lines.append(
+                    #     [final_sentence, resolved[coref.start], coref.text])
                     # lines.append(
                     #     [final_sentence, coref.text, resolved[coref.start]])
+    print(''.join(resolved))
     for line in lines:
         print(line[1:])
 
