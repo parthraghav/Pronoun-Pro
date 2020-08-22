@@ -71,6 +71,12 @@ def get_resolved(doc, clusters):
                         ])
 
 
+def coref_distance(coref, main):
+    """Returns a distance between a co-refering mention from the main mention.
+    """
+    return abs(coref.start - main.start)
+
+
 def neutralise(doc):
     """Neutralise gendered coreferences in a text block.
     """
