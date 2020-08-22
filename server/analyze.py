@@ -40,7 +40,13 @@ def get_sentence_at_index(index, resolved_list):
     return resolved_list[begin_index + 1:end_index + 1], begin_index + 1
 
 
-def neutralise(doc, clusters):
+def coref_distance(coref, main):
+    """Returns a distance between a co-refering mention from the main mention.
+    """
+    return abs(coref.start - main.end)
+
+
+def _neutralise(doc, clusters):
     """Neutralise gendered coreferences in a text block.
     """
     resolved = [tok.text_with_ws for tok in doc]
@@ -108,16 +114,16 @@ def neutralise(doc, clusters):
     return ''.join(resolved)
 
 
-def coref_distance(coref, main):
-    """Returns a distance between a co-refering mention from the main mention.
-    """
-    return abs(coref.start - main.end)
+def neutralise(txt):
+    doc = nlp(u'''{txt}'''.format(txt=txt))
+    clusters = doc._.coref_clusters
+    return _neutralise(doc, clusters)
 
 
 if __name__ == '__main__':
     # You're done. You can now use NeuralCoref as you usually manipulate a SpaCy document annotations.
-    doc = nlp(
-        u'''During Destiny's Child's hiatus, Beyoncé made her theatrical film debut with a role in the US box-office number-one Austin Powers in Goldmember (2002) and began her solo music career. She became the first music act to debut at number one with their first six solo studio albums on the Billboard 200.[7] Her debut album Dangerously in Love (2003) featured four Billboard Hot 100 top five songs, including the number-one singles "Crazy in Love" featuring rapper Jay-Z and "Baby Boy" featuring singer-rapper Sean Paul. She married Jay-Z. He cheated on her. Following the disbandment of Destiny's Child in 2006, she released her second solo album, B'Day, which contained her first US number-one solo single "Irreplaceable", and "Beautiful Liar", which topped the charts in most countries. Beyoncé continued her acting career with starring roles in The Pink Panther (2006), Dreamgirls (2006), and Obsessed (2009). Her marriage to Jay-Z and her portrayal of Etta James in Cadillac Records (2008) influenced her third album, I Am... Sasha Fierce (2008), which earned a record-setting six Grammy Awards in 2010. It spawned the UK number-one single "If I Were a Boy", the US number-one single "Single Ladies (Put a Ring on It)" and the top five single "Halo".'''
-    )
-    clusters = doc._.coref_clusters
-    print(neutralise(doc, clusters))
+    with open('demo.txt', 'r') as file:
+        text = file.read().replace('\n', '')
+        neutralised_text = neutralise(text)
+        print(neutralised_text)
+        file.close()
