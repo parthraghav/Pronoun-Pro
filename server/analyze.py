@@ -71,19 +71,21 @@ def get_resolved(doc, clusters):
                         if start_index == coref.start:
                             resolved[coref.start] = resolved[
                                 coref.start].capitalize()
-                        final_sentence = ''.join(original_sentence)
                     else:
                         # Neutralise the co-referring mention
-                        if resolved[coref.start] in SECOND_PERSONAL_PRONOUNS:
+                        pronoun = resolved[coref.start].strip().lower()
+                        if pronoun in SECOND_PERSONAL_PRONOUNS:
                             detected_pronoun_set = SECOND_PERSONAL_PRONOUNS
-                        elif resolved[
-                                coref.start] in SECOND_OBJECTIVE_PRONOUNS:
+                        elif pronoun in SECOND_OBJECTIVE_PRONOUNS:
                             detected_pronoun_set = SECOND_OBJECTIVE_PRONOUNS
-                        elif resolved[coref.start] in SECOND_PROMINAL_PRONOUNS:
+                        elif pronoun in SECOND_PROMINAL_PRONOUNS:
                             detected_pronoun_set = SECOND_PROMINAL_PRONOUNS
-                        elif resolved[
-                                coref.start] in SECOND_POSSESSIVE_PRONOUNS:
+                        elif pronoun in SECOND_POSSESSIVE_PRONOUNS:
                             detected_pronoun_set = SECOND_POSSESSIVE_PRONOUNS
+                        else:
+                            print("fuck", pronoun, pronoun
+                                  in SECOND_PERSONAL_PRONOUNS,
+                                  SECOND_PERSONAL_PRONOUNS)
 
                         resolved[coref.start] = detected_pronoun_set[-1] + doc[
                             coref.end - 1].whitespace_
@@ -92,8 +94,18 @@ def get_resolved(doc, clusters):
                             resolved[coref.start] = resolved[
                                 coref.start].capitalize()
                         # TODO: Neutralise the corresponding verb
+                        original_sentence = [
+                            resolved[coref.start]
+                            if word == coref.text else word
+                            for word in original_sentence
+                        ]
+                    final_sentence = ''.join(original_sentence)
                     lines.append(
-                        [final_sentence, coref.text, resolved[coref.start]])
+                        [final_sentence, resolved[coref.start], coref.text])
+                    # lines.append(
+                    #     [final_sentence, coref.text, resolved[coref.start]])
+    for line in lines:
+        print(line[1:])
 
 
 def coref_distance(coref, main):
