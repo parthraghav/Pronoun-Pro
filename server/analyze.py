@@ -6,9 +6,16 @@ nlp = spacy.load('en')
 import neuralcoref
 neuralcoref.add_to_pipe(nlp)
 
-pronoun_list = [
-    'he', 'she', 'it', 'they', 'them', 'him', 'her', 'his', 'hers', 'its',
-    'we', 'us'
+SECOND_PERSONAL_PRONOUNS = ['he', 'she', 'they']
+SECOND_OBJECTIVE_PRONOUNS = ['him', 'her', 'them']
+SECOND_PROMINAL_PRONOUNS = ['his', 'her', 'their']
+SECOND_POSSESSIVE_PRONOUNS = ['his', 'hers', 'theirs']
+
+PRONOUN_LIST = [
+    *SECOND_PERSONAL_PRONOUNS,
+    *SECOND_OBJECTIVE_PRONOUNS,
+    *SECOND_PROMINAL_PRONOUNS,
+    *SECOND_POSSESSIVE_PRONOUNS,
 ]
 
 
@@ -45,7 +52,7 @@ def get_resolved(doc, clusters):
 
             _isSingleToken = len(coref_text.split()) == 1
             _isNotMainMention = coref_text != cluster_main_text
-            _isIdentifiablePronoun = coref_text in pronoun_list
+            _isIdentifiablePronoun = coref_text in PRONOUN_LIST
 
             if _isSingleToken and _isNotMainMention and _isIdentifiablePronoun:
                 # Token is pronoun!
@@ -56,25 +63,43 @@ def get_resolved(doc, clusters):
                 if ' '.join(cluster_main_text.strip().split()
                             ) not in processed_sentence:
                     # The main mention does not occur in this sentence as a word
-                    # Resolve co-referring mention with the main mention
-                    resolved[coref.start] = cluster.main.text + doc[
-                        coref.end - 1].whitespace_
-                    # Capitalise the first letter of the name
-                    if start_index == coref.start:
-                        resolved[coref.start] = resolved[
-                            coref.start].capitalize()
-                    final_sentence = ''.join(original_sentence)
+                    if coref_distance(coref, cluster.main) > 100:
+                        # Resolve co-referring mention with the main mention
+                        resolved[coref.start] = cluster.main.text + doc[
+                            coref.end - 1].whitespace_
+                        # Capitalise the first letter of the name
+                        if start_index == coref.start:
+                            resolved[coref.start] = resolved[
+                                coref.start].capitalize()
+                        final_sentence = ''.join(original_sentence)
+                    else:
+                        # Neutralise the co-referring mention
+                        if resolved[coref.start] in SECOND_PERSONAL_PRONOUNS:
+                            detected_pronoun_set = SECOND_PERSONAL_PRONOUNS
+                        elif resolved[
+                                coref.start] in SECOND_OBJECTIVE_PRONOUNS:
+                            detected_pronoun_set = SECOND_OBJECTIVE_PRONOUNS
+                        elif resolved[coref.start] in SECOND_PROMINAL_PRONOUNS:
+                            detected_pronoun_set = SECOND_PROMINAL_PRONOUNS
+                        elif resolved[
+                                coref.start] in SECOND_POSSESSIVE_PRONOUNS:
+                            detected_pronoun_set = SECOND_POSSESSIVE_PRONOUNS
 
-                    if len(final_sentence) > 0:
-                        lines.append([
-                            final_sentence, coref.text, resolved[coref.start]
-                        ])
+                        resolved[coref.start] = detected_pronoun_set[-1] + doc[
+                            coref.end - 1].whitespace_
+                        # Capitalise the first letter of the pronoun
+                        if start_index == coref.start:
+                            resolved[coref.start] = resolved[
+                                coref.start].capitalize()
+                        # TODO: Neutralise the corresponding verb
+                    lines.append(
+                        [final_sentence, coref.text, resolved[coref.start]])
 
 
 def coref_distance(coref, main):
     """Returns a distance between a co-refering mention from the main mention.
     """
-    return abs(coref.start - main.start)
+    return abs(coref.start - main.end)
 
 
 def neutralise(doc):
