@@ -1,4 +1,4 @@
-# ProPronoun
+# 🌈 PronounPro
 ## Chrome extension to neutralise the web!
 [Learn more](/SUBMISSION.md)
 
