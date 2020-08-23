@@ -46,6 +46,11 @@ def coref_distance(coref, main):
     return abs(coref.start - main.end)
 
 
+def get_offset_to_verb_and_aux(sentence):
+    """Returns offset to vern and auxiliary"""
+    pass
+
+
 def _neutralise(doc, clusters):
     """Neutralise gendered coreferences in a text block.
     """
@@ -104,7 +109,23 @@ def _neutralise(doc, clusters):
                         if start_index == coref.start:
                             resolved[coref.start] = resolved[
                                 coref.start].capitalize()
-                        # TODO: Neutralise the corresponding verb
+                        # Neutralise the corresponding verb
+                        verb_candidate1 = doc[coref.start + 1]
+                        if verb_candidate1.pos_ == 'VERB':
+                            resolved[coref.start +
+                                     1] = verb_candidate1.lemma_ + doc[
+                                         coref.end - 1].whitespace_
+                            if verb_candidate1.text == 'is':
+                                resolved[coref.start +
+                                         1] = 'are' + doc[coref.end -
+                                                          1].whitespace_
+                            if verb_candidate1.text == 'was':
+                                resolved[coref.start +
+                                         1] = 'were' + doc[coref.end -
+                                                           1].whitespace_
+
+                        # print(doc[coref.start + 1].pos_)
+
                         original_sentence = [
                             resolved[coref.start]
                             if word == coref.text else word
