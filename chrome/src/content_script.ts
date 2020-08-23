@@ -17,6 +17,20 @@ import * as $ from "jquery";
 //   }
 // });
 
+function manipulateDOMWithResult(result) {
+  Object.keys(result)
+    .sort()
+    .forEach((key) => {
+      let replacement_text = result[key];
+      let el: HTMLElement | null = document.querySelector(
+        `p[data-paragraph-id="${key}"]`
+      );
+      if (el instanceof HTMLElement) {
+        el.innerText = replacement_text;
+      }
+    });
+}
+
 function handleWindowLoad() {
   let input = {};
   [...document.querySelectorAll("p")].forEach((node, i) => {
@@ -35,17 +49,9 @@ function handleWindowLoad() {
 
   $.ajax(settings).done(function (response) {
     var result = response.result;
-    Object.keys(result)
-      .sort()
-      .forEach((key) => {
-        let replacement_text = result[key];
-        let el: HTMLElement | null = document.querySelector(
-          `p[data-paragraph-id="${key}"]`
-        );
-        if (el instanceof HTMLElement) {
-          el.innerText = replacement_text;
-        }
-      });
+    if (parseInt(response.status) == 200) {
+      manipulateDOMWithResult(result);
+    }
   });
 }
 
