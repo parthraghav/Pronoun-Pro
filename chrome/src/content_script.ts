@@ -1,22 +1,5 @@
 import * as $ from "jquery";
 
-// chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-//   console.log(msg);
-//   if (msg.color) {
-//     console.log("Receive color = " + msg.color);
-//     document.body.style.backgroundColor = msg.color;
-//     sendResponse("Change color to " + msg.color);
-//   } else {
-//     sendResponse("Color message is none.");
-//   }
-//   if (!msg.isNeutralised) {
-//     document.body.addEventListener("DOMNodeInserted", function (event) {
-//       console.log(event.target);
-//       console.log("rabitmouth");
-//     });
-//   }
-// });
-
 function manipulateDOMWithResult(result) {
   Object.keys(result)
     .sort()
