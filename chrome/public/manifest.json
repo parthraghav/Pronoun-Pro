@@ -1,20 +1,14 @@
 {
   "manifest_version": 2,
 
-  "name": "Chrome Extension TypeScript Starter",
-  "description": "Chrome Extension, TypeScript, Visual Studio Code",
+  "name": "ProPronoun: Web is gendered! Let's neutralise it!",
+  "description": "A chrome extension to neutralise gendered pronouns on webpages and make your web surfing experience less binary-reinforcing!",
   "version": "1.0",
-
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
   },
-
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
-  },
-
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
