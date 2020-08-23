@@ -16,11 +16,18 @@ class ServerResponse(Enum):
 @app.route('/', methods=['POST'])
 def serve_neutraliser():
     status = ServerResponse.INVALID
+    text_delimiter = ' This is a delimiter. '
     result = ""
     if request.method == 'POST':
-        text = request.json['data']
+        data_map = request.json['data']
         try:
-            result = neutralise(text)
+            text = text_delimiter.join(
+                [data_map[key] for key in sorted(data_map.keys())])
+            output = neutralise(text)
+            result = {
+                str(index): val
+                for index, val in enumerate(output.split(text_delimiter))
+            }
             status = ServerResponse.SUCCESS
         except:
             status = ServerResponse.FAILURE
