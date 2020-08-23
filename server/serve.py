@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from analyze import neutralise
 import requests
 from enum import Enum
 app = Flask(__name__)
+CORS(app)
 
 
 class ServerResponse(Enum):
