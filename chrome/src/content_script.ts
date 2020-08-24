@@ -29,9 +29,10 @@ function handleWindowLoad() {
     },
     data: JSON.stringify({ data: input }),
   };
-
+  console.log(input);
   $.ajax(settings).done(function (response) {
     var result = response.result;
+    console.log(result);
     if (parseInt(response.status) == 200) {
       manipulateDOMWithResult(result);
     }
