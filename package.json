@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build_static": "cd static && yarn build"
+    "build_static": "cd static && npm run build"
   }
 }
