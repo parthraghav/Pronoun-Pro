@@ -1,0 +1,83 @@
+/* Mobile */
+.resp-pos {
+  padding: 0px 30px;
+}
+/* Tablet */
+@media only screen and (min-width: 600px) {
+  .resp-pos {
+    padding: 0px 50px;
+  }
+  .resp-btn-container {
+    flex-direction: row !important;
+  }
+}
+/* Desktop */
+@media only screen and (min-width: 668px) {
+  .resp-pos {
+    padding: 0px 100px;
+  }
+}
+@media only screen and (min-width: 1100px) {
+  .resp-pos {
+    padding: 0px 200px;
+  }
+}
+/* Independent of Device Size */
+.App {
+  padding-top: 50px;
+}
+header > h1,
+h2,
+h3 {
+  margin: 0px;
+}
+header > h3 {
+  margin: 20px !important;
+}
+
+header {
+  text-align: center;
+}
+
+.resp-iframe {
+  width: 100vw;
+  height: 100vh;
+  max-width: 600px;
+  max-height: calc(600px * 315 / 560);
+  margin: 0px auto;
+  display: block;
+}
+
+.resp-btn {
+  text-align: center;
+  flex: 1;
+  background: #ececec;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 10px;
+  cursor: pointer;
+  transition: 1s transform;
+}
+
+.resp-btn > * + * {
+  margin-left: 0.5em;
+}
+
+.resp-btn:hover,
+.resp-btn:focus {
+  transform: scale(0.9);
+}
+
+.resp-btn-focused {
+  background: #1e88e5;
+  color: white;
+}
+
+.resp-btn-container {
+  margin: 1em 0em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
