@@ -2,8 +2,7 @@
 
 ## Chrome extension to neutralise the web!
 
-![build status](![Production Status: Work in Progress](https://img.shields.io/badge/build-successful-brightgreen)
-"Build status")
+![Production Status: Success](https://img.shields.io/badge/build-successful-brightgreen)
 
 Pronoun Pro is a chrome extension that neutralizes gendered pronouns across all webpages on your browser. It is a sandbox for trans allies to practice using gender-neutral language on the web! My mission is to make web gender-free!<br>
 [Learn more](/SUBMISSION.md)
