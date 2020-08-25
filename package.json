@@ -1,0 +1,8 @@
+{
+  "name": "pronounpro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build_static": "cd static && yarn build"
+  }
+}
