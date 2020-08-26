@@ -1,0 +1,64 @@
+.app {
+  padding: 2em 30px;
+}
+.controllerContainer {
+  padding: 0em 1em;
+  margin: 0em 1em;
+}
+
+.row {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  text-align: center;
+}
+.controllerContainer .searchBar {
+  flex: 1;
+  padding: 1em;
+  font-size: 1em;
+  border-radius: 7px 0px 0px 7px;
+
+  border: 1px solid #e0e0e0;
+}
+.controllerContainer .submitBtn {
+  flex: none;
+  background: #015fcc;
+  color: white;
+  padding: 1em;
+  border-radius: 0px 7px 7px 0px;
+  cursor: pointer;
+}
+.suggestionsContainer a {
+  color: #015fcc;
+  font-weight: 600;
+  cursor: pointer;
+}
+.suggestionsBar {
+  padding: 1em 0em;
+}
+.suggestionsContainer a:not(:last-of-type):after {
+  content: ", ";
+}
+.resultContainer {
+  display: flex;
+  flex: 1;
+}
+.wrapper {
+  margin: 0em 1em;
+}
+.inputContainer,
+.outputContainer {
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  overflow: scroll;
+  padding: 1em;
+  height: 300px;
+}
+.inputContainer {
+  flex: 1;
+  background-color: #eeeeee;
+}
+.outputContainer {
+  flex: 1;
+}
