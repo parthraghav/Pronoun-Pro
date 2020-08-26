@@ -90,7 +90,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="resultContainer">
+      <div className="row">
         <div className="wrapper">
           <h3>Original Text</h3>
           <Container
