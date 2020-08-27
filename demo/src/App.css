@@ -1,5 +1,7 @@
 .app {
   padding: 2em 30px;
+  max-width: 896px;
+  margin: 0px auto;
 }
 .controllerContainer {
   padding: 0em 1em;
@@ -8,12 +10,14 @@
 
 .row {
   display: flex;
+  flex-direction: column !important;
   flex: 1;
   flex-direction: row;
   text-align: center;
 }
 .controllerContainer .searchBar {
   flex: 1;
+  flex-basis: 80%;
   padding: 1em;
   font-size: 1em;
   border-radius: 7px 0px 0px 7px;
@@ -21,7 +25,9 @@
   border: 1px solid #e0e0e0;
 }
 .controllerContainer .submitBtn {
-  flex: none;
+  flex: 1;
+  flex-basis: 20%;
+  flex-shrink: 1;
   background: #015fcc;
   color: white;
   padding: 1em;
@@ -40,12 +46,9 @@
 .suggestionsContainer a:not(:last-of-type):after {
   content: ", ";
 }
-.resultContainer {
-  display: flex;
-  flex: 1;
-}
 .wrapper {
   margin: 0em 1em;
+  flex: 1;
 }
 .inputContainer,
 .outputContainer {
@@ -62,4 +65,10 @@
 }
 .outputContainer {
   flex: 1;
+}
+
+@media only screen and (min-width: 600px) {
+  .row {
+    flex-direction: row !important;
+  }
 }
